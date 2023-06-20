@@ -6,10 +6,9 @@ import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-import org.telegram.telegrambots.meta.generics.LongPollingBot;
 
 @Component
-public class BotController extends TelegramLongPollingBot implements LongPollingBot {
+public class BotController extends TelegramLongPollingBot {
 
     @lombok.Getter
     @Value("${telegram.bot.username}")
