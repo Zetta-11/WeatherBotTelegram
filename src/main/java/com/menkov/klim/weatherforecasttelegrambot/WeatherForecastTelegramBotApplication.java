@@ -6,7 +6,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @ComponentScan(basePackages = {
-        "com.menkov.klim.weatherforecasttelegrambot.controller",
+        "com.menkov.klim.weatherforecasttelegrambot",
         "org.telegram.telegrambots"
 })
 public class WeatherForecastTelegramBotApplication {
