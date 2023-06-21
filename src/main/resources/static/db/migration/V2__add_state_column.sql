@@ -1,0 +1,7 @@
+CREATE TABLE IF NOT EXISTS users
+(
+    id       BIGINT PRIMARY KEY AUTO_INCREMENT,
+    chat_id BIGINT NOT NULL,
+    city    VARCHAR(255) NOT NULL,
+    state   VARCHAR(255)
+);

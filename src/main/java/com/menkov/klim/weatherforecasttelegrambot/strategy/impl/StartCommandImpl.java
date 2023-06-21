@@ -27,6 +27,7 @@ public class StartCommandImpl implements Command {
             user = new User();
             user.setChatId(chatId);
             user.setCity("Kyiv");
+            user.setState("");
             userService.saveUser(user);
         }
 

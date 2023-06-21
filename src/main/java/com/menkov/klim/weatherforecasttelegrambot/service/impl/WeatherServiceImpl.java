@@ -20,4 +20,17 @@ public class WeatherServiceImpl implements WeatherService {
 
         return weatherData;
     }
+
+    public boolean cityIsValid(String city) {
+        String apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=metric&appid=" + apiKey;
+
+        try {
+            RestTemplate restTemplate = new RestTemplate();
+            WeatherData weatherData = restTemplate.getForObject(apiUrl, WeatherData.class);
+
+            return true;
+        } catch (HttpClientErrorException e) {
+            return false;
+        }
+    }
 }

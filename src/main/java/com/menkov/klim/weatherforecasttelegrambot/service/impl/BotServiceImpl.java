@@ -32,6 +32,9 @@ public class BotServiceImpl implements BotService {
     @Value("${confirm.message}")
     private String CONFIRM_MESSAGE;
 
+    @Value("${warning.message}")
+    private String WARNING_MESSAGE;
+
     @Value("${takeUmbrella.message}")
     private String TAKE_UMBRELLA_MESSAGE;
 

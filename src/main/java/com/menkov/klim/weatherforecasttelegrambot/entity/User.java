@@ -22,4 +22,7 @@ public class User {
 
     @Column(name = "city", nullable = false)
     private String city;
+
+    @Column(name = "state", nullable = true)
+    private String state;
 }

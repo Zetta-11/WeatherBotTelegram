@@ -23,6 +23,8 @@ public interface BotService {
 
     String getCONFIRM_MESSAGE();
 
+    String getWARNING_MESSAGE();
+
     String getTAKE_UMBRELLA_MESSAGE();
 
     String getNO_UMBRELLA_MESSAGE();
