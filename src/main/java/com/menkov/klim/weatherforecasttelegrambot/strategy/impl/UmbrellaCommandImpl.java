@@ -9,6 +9,7 @@ import com.menkov.klim.weatherforecasttelegrambot.strategy.Command;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.objects.Update;
 
 @Component
 @AllArgsConstructor
@@ -21,7 +22,7 @@ public class UmbrellaCommandImpl implements Command {
     private UserService userService;
 
     @Override
-    public void execute(SendMessage message) {
+    public void execute(Update update, SendMessage message) {
         long chatId = Long.parseLong(message.getChatId());
         User user = userService.getUserByChatId(chatId);
         WeatherData weatherData = weatherService.getWeather(user.getCity());

@@ -1,5 +1,6 @@
 package com.menkov.klim.weatherforecasttelegrambot.controller;
 
+import com.menkov.klim.weatherforecasttelegrambot.entity.User;
 import com.menkov.klim.weatherforecasttelegrambot.service.BotService;
 import com.menkov.klim.weatherforecasttelegrambot.service.UserService;
 import com.menkov.klim.weatherforecasttelegrambot.service.WeatherService;
@@ -61,8 +62,15 @@ public class BotController extends TelegramLongPollingBot {
             SendMessage message = new SendMessage();
             message.setChatId(chatId);
 
-            Command strategy = commandStrategies.getOrDefault(messageText, new UnknownCommandImpl());
-            strategy.execute(message);
+            User user = userService.getUserByChatId(Long.parseLong(chatId));
+
+            if (user != null && user.getState().equals("WAITING_FOR_CITY")) {
+                CityCommandImpl cityCommand = new CityCommandImpl(botService, userService, weatherService);
+                cityCommand.execute(update, message);
+            } else {
+                Command strategy = commandStrategies.getOrDefault(messageText, new UnknownCommandImpl());
+                strategy.execute(update, message);
+            }
 
             try {
                 execute(message);
