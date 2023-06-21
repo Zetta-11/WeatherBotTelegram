@@ -25,6 +25,6 @@ public class CityCommandImpl implements Command {
             user.setCity(city);
             userService.saveUser(user);
         }
-        message.setText(botService.getSTART_MESSAGE());
+        message.setText(botService.getCONFIRM_MESSAGE());
     }
 }

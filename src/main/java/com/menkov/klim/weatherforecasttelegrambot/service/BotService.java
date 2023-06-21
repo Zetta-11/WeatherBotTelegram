@@ -20,4 +20,10 @@ public interface BotService {
     String getSTART_MESSAGE();
 
     String getWEATHER_MESSAGE();
+
+    String getCONFIRM_MESSAGE();
+
+    String getTAKE_UMBRELLA_MESSAGE();
+
+    String getNO_UMBRELLA_MESSAGE();
 }

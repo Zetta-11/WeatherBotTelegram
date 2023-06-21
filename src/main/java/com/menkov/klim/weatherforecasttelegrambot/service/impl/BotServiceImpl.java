@@ -32,6 +32,12 @@ public class BotServiceImpl implements BotService {
     @Value("${confirm.message}")
     private String CONFIRM_MESSAGE;
 
+    @Value("${takeUmbrella.message}")
+    private String TAKE_UMBRELLA_MESSAGE;
+
+    @Value("${noUmbrella.message}")
+    private String NO_UMBRELLA_MESSAGE;
+
     @Override
     public List<KeyboardRow> getMainButtons() {
         List<KeyboardRow> keyboard = new ArrayList<>();
@@ -84,5 +90,4 @@ public class BotServiceImpl implements BotService {
 
         return keyboardMarkup;
     }
-
 }
