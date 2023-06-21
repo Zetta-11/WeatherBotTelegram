@@ -1,7 +1,11 @@
 package com.menkov.klim.weatherforecasttelegrambot.controller;
 
-import com.menkov.klim.weatherforecasttelegrambot.entity.WeatherData;
+import com.menkov.klim.weatherforecasttelegrambot.service.BotService;
 import com.menkov.klim.weatherforecasttelegrambot.service.WeatherService;
+import com.menkov.klim.weatherforecasttelegrambot.service.impl.BotServiceImpl;
+import com.menkov.klim.weatherforecasttelegrambot.strategy.Command;
+import com.menkov.klim.weatherforecasttelegrambot.strategy.impl.StartCommandImpl;
+import com.menkov.klim.weatherforecasttelegrambot.strategy.impl.UnknownCommand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -10,8 +14,13 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Component
 public class BotController extends TelegramLongPollingBot {
+
+    private final Map<String, Command> commandStrategies;
 
     @lombok.Getter
     @Value("${telegram.bot.username}")
@@ -24,30 +33,31 @@ public class BotController extends TelegramLongPollingBot {
     @Autowired
     private WeatherService weatherService;
 
+    @Autowired
+    private BotService botService;
+
+    public BotController(BotService botService) {
+        commandStrategies = new HashMap<>();
+        commandStrategies.put("/start", new StartCommandImpl());
+        //TODO
+    }
+
     @Override
     public void onUpdateReceived(Update update) {
-        String chatId = update.getMessage().getChatId().toString();
-        String city = update.getMessage().getText();
-
-        try {
-            WeatherData weatherData = weatherService.getWeather(city);
+        if (update.hasMessage() && update.getMessage().hasText()) {
+            String chatId = update.getMessage().getChatId().toString();
+            String messageText = update.getMessage().getText();
 
             SendMessage message = new SendMessage();
             message.setChatId(chatId);
-            message.setText("Weather in " + weatherData.getName() + ", " + weatherData.getSysData().getCountry() + ":\n" +
-                    "Description: " + weatherData.getWeatherDescriptions()[0].getDescription() + "\n" +
-                    "Temperature: " + weatherData.getMainData().getTemp() + "°C\n" +
-                    "Humidity: " + weatherData.getMainData().getHumidity() + "%\n" +
-                    "Wind Speed: " + weatherData.getWindData().getSpeed() + " m/s");
-            execute(message);
-        } catch (Exception ex) {
-            SendMessage message = new SendMessage();
-            message.setChatId(chatId);
-            message.setText("Invalid City! Try again");
+
+            Command strategy = commandStrategies.getOrDefault(messageText, new UnknownCommand());
+            strategy.execute(message);
+
             try {
                 execute(message);
             } catch (TelegramApiException e) {
-                throw new RuntimeException(e);
+                e.printStackTrace();
             }
         }
     }
