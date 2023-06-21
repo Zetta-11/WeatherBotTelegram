@@ -51,6 +51,7 @@ public class BotController extends TelegramLongPollingBot {
         commandStrategies.put("Do I need an umbrella today?", new UmbrellaCommandImpl(botService, weatherService, userService));
         commandStrategies.put("Set/Change City", new CityCommandImpl(botService, userService, weatherService));
         commandStrategies.put("Get weather for my City", new WeatherCommandImpl(weatherService, userService));
+        commandStrategies.put("Get weather for my City for 5 days", new WeatherForecastCommandImpl(weatherService, userService));
     }
 
     @Override

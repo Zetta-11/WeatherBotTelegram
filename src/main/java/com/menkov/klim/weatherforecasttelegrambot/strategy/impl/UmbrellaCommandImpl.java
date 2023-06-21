@@ -26,9 +26,10 @@ public class UmbrellaCommandImpl implements Command {
         long chatId = Long.parseLong(message.getChatId());
         User user = userService.getUserByChatId(chatId);
         WeatherData weatherData = weatherService.getWeather(user.getCity());
-        String currentWeather = weatherData.getWeatherDescriptions()[0].getDescription();
+        String currentWeather = weatherData.getWeatherDescriptions().get(0).getDescription();
 
-        if (currentWeather.equals("Drizzle") || currentWeather.equals("Rain") || currentWeather.equals("Thunderstorm")) {
+        if (currentWeather.equals("drizzle") || currentWeather.equals("rain") || currentWeather.equals("thunderstorm")
+                || currentWeather.equals("light rain")) {
             message.setText(botService.getTAKE_UMBRELLA_MESSAGE());
         } else {
             message.setText(botService.getNO_UMBRELLA_MESSAGE());

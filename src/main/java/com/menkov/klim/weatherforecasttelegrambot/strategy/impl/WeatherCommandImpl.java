@@ -15,7 +15,6 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 public class WeatherCommandImpl implements Command {
 
     WeatherService weatherService;
-
     UserService userService;
 
     @Override
@@ -24,10 +23,13 @@ public class WeatherCommandImpl implements Command {
         User user = userService.getUserByChatId(chatId);
         WeatherData weatherData = weatherService.getWeather(user.getCity());
 
-        message.setText("Weather in " + weatherData.getName() + ", " + weatherData.getSysData().getCountry() + ":\n" +
-                "Description: " + weatherData.getWeatherDescriptions()[0].getDescription() + "\n" +
-                "Temperature: " + weatherData.getMainData().getTemp() + "°C\n" +
-                "Humidity: " + weatherData.getMainData().getHumidity() + "%\n" +
-                "Wind Speed: " + weatherData.getWindData().getSpeed() + " m/s");
+        message.setText("\uD83D\uDCCD Weather in " + weatherData.getName() + ", " + weatherData.getSysData().getCountry() + ":\n" +
+                "\uD83D\uDE0E Description: " + weatherData.getWeatherDescriptions().get(0).getDescription() + "\n" +
+                "\uD83C\uDF21 Temperature: " + weatherData.getMainData().getTemp() + "°C\n" +
+                "\uD83C\uDF27 Humidity: " + weatherData.getMainData().getHumidity() + "%\n" +
+                "\uD83D\uDCA8 Wind Speed: " + weatherData.getWindData().getSpeed() + " m/s\n" +
+                "☀\uFE0F Temperature today is from " + weatherData.getMainData().getTempMin() + "°C to "
+                + weatherData.getMainData().getTempMax() + "°C\n" +
+                "♨\uFE0F Pressure is: " + weatherData.getMainData().getPressure() + "hPa");
     }
 }

@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -16,7 +18,7 @@ public class WeatherData {
     private String name;
 
     @JsonAlias("weather")
-    private WeatherDescription[] weatherDescriptions;
+    private List<WeatherDescription> weatherDescriptions;
 
     @JsonAlias("main")
     private MainData mainData;

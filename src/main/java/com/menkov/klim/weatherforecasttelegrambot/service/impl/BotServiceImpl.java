@@ -72,15 +72,19 @@ public class BotServiceImpl implements BotService {
         row2.add(new KeyboardButton("Get weather for my City"));
 
         KeyboardRow row3 = new KeyboardRow();
-        row3.add(new KeyboardButton("Do I need an umbrella today?"));
+        row2.add(new KeyboardButton("Get weather for my City for 5 days"));
 
         KeyboardRow row4 = new KeyboardRow();
+        row3.add(new KeyboardButton("Do I need an umbrella today?"));
+
+        KeyboardRow row5 = new KeyboardRow();
         row3.add(new KeyboardButton("Back"));
 
         keyboard.add(row1);
         keyboard.add(row2);
         keyboard.add(row3);
         keyboard.add(row4);
+        keyboard.add(row5);
 
         return keyboard;
     }
