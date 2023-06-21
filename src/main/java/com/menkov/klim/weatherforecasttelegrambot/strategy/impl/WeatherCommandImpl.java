@@ -5,9 +5,9 @@ import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 
 @Component
-public class UnknownCommand implements Command {
+public class WeatherCommandImpl implements Command {
     @Override
     public void execute(SendMessage message) {
-        message.setText("Unknown command!");
+
     }
 }

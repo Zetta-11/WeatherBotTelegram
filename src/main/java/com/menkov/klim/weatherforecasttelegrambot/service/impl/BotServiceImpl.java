@@ -1,7 +1,6 @@
 package com.menkov.klim.weatherforecasttelegrambot.service.impl;
 
 import com.menkov.klim.weatherforecasttelegrambot.service.BotService;
-import lombok.Getter;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardButton;
@@ -11,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-@Getter
 public class BotServiceImpl implements BotService {
 
     @Override

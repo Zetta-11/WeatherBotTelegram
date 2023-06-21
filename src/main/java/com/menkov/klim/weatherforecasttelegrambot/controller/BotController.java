@@ -2,10 +2,12 @@ package com.menkov.klim.weatherforecasttelegrambot.controller;
 
 import com.menkov.klim.weatherforecasttelegrambot.service.BotService;
 import com.menkov.klim.weatherforecasttelegrambot.service.WeatherService;
-import com.menkov.klim.weatherforecasttelegrambot.service.impl.BotServiceImpl;
 import com.menkov.klim.weatherforecasttelegrambot.strategy.Command;
+import com.menkov.klim.weatherforecasttelegrambot.strategy.impl.AboutCommandImpl;
+import com.menkov.klim.weatherforecasttelegrambot.strategy.impl.HelpCommandImpl;
 import com.menkov.klim.weatherforecasttelegrambot.strategy.impl.StartCommandImpl;
-import com.menkov.klim.weatherforecasttelegrambot.strategy.impl.UnknownCommand;
+import com.menkov.klim.weatherforecasttelegrambot.strategy.impl.UnknownCommandImpl;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -20,7 +22,7 @@ import java.util.Map;
 @Component
 public class BotController extends TelegramLongPollingBot {
 
-    private final Map<String, Command> commandStrategies;
+    private Map<String, Command> commandStrategies;
 
     @lombok.Getter
     @Value("${telegram.bot.username}")
@@ -36,9 +38,12 @@ public class BotController extends TelegramLongPollingBot {
     @Autowired
     private BotService botService;
 
-    public BotController(BotService botService) {
+    @PostConstruct
+    public void init() {
         commandStrategies = new HashMap<>();
-        commandStrategies.put("/start", new StartCommandImpl());
+        commandStrategies.put("/start", new StartCommandImpl(botService));
+        commandStrategies.put("About", new AboutCommandImpl(botService));
+        commandStrategies.put("Help", new HelpCommandImpl(botService));
         //TODO
     }
 
@@ -51,7 +56,7 @@ public class BotController extends TelegramLongPollingBot {
             SendMessage message = new SendMessage();
             message.setChatId(chatId);
 
-            Command strategy = commandStrategies.getOrDefault(messageText, new UnknownCommand());
+            Command strategy = commandStrategies.getOrDefault(messageText, new UnknownCommandImpl());
             strategy.execute(message);
 
             try {
