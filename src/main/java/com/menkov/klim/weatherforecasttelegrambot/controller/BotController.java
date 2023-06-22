@@ -16,6 +16,7 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Component
@@ -73,6 +74,16 @@ public class BotController extends TelegramLongPollingBot {
                 strategy.execute(update, message);
             }
 
+            try {
+                execute(message);
+            } catch (TelegramApiException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void sendMessages(List<SendMessage> messages) {
+        for (SendMessage message : messages) {
             try {
                 execute(message);
             } catch (TelegramApiException e) {
