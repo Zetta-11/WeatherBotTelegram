@@ -9,4 +9,6 @@ public interface WeatherService {
     WeatherForecast getWeatherForecast(String location);
 
     boolean cityIsValid(String city);
+
+    String createWeatherMessage(WeatherData weatherData);
 }

@@ -45,4 +45,18 @@ public class WeatherServiceImpl implements WeatherService {
             return false;
         }
     }
+
+    @Override
+    public String createWeatherMessage(WeatherData weatherData) {
+        return "\uD83D\uDCCD Weather in " + weatherData.getName() + ", " + weatherData.getSysData().getCountry() + ":\n" +
+                "\uD83D\uDE0E Description: " + weatherData.getWeatherDescriptions().get(0).getDescription() + "\n" +
+                "\uD83C\uDF21 Temperature: " + weatherData.getMainData().getTemp() + "°C\n" +
+                "\uD83C\uDF27 Humidity: " + weatherData.getMainData().getHumidity() + "%\n" +
+                "\uD83D\uDCA8 Wind Speed: " + weatherData.getWindData().getSpeed() + " m/s\n" +
+                "☀\uFE0F Temperature today is from " + weatherData.getMainData().getTempMin() + "°C to "
+                + weatherData.getMainData().getTempMax() + "°C\n" +
+                "♨\uFE0F Pressure is: " + weatherData.getMainData().getPressure() + "hPa";
+    }
+
+
 }
