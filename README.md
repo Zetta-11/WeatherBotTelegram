@@ -13,7 +13,7 @@ This educational project is a Telegram bot that provides weather data and foreca
 ## Technologies Used
 
 - Java 17
-- Spring Boot 3.0.1
+- Spring Boot 3.1.0
 - Spring Data JPA
 - MySQL
 - Jackson
