@@ -28,8 +28,7 @@ public class UmbrellaCommandImpl implements Command {
         WeatherData weatherData = weatherService.getWeather(user.getCity());
         String currentWeather = weatherData.getWeatherDescriptions().get(0).getDescription();
 
-        if (currentWeather.equals("drizzle") || currentWeather.equals("rain") || currentWeather.equals("thunderstorm")
-                || currentWeather.equals("light rain")) {
+        if (currentWeather.contains("rain") || currentWeather.contains("drizzle") || currentWeather.contains("storm")) {
             message.setText(botService.getTAKE_UMBRELLA_MESSAGE());
         } else {
             message.setText(botService.getNO_UMBRELLA_MESSAGE());
